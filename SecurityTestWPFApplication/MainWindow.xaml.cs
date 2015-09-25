@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,17 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
-//using Microsoft.IdentityModel.Protocols.WSTrust;
+using Microsoft.IdentityModel.Protocols.WSTrust;
+using System.ServiceModel;
+using System.ServiceModel.Security;
 using Newtonsoft.Json;
+using AuthenticationContext = Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext;
+using WSTrustChannelFactory = Microsoft.IdentityModel.Protocols.WSTrust.WSTrustChannelFactory;
 
 namespace SecurityTestWPFApplication
 {
@@ -110,7 +107,7 @@ namespace SecurityTestWPFApplication
             string responseString = await response.Content.ReadAsStringAsync();
             MessageBox.Show(responseString);
         }
-        /*
+        
         private async void Buttion_SAMLFlow(object sender, RoutedEventArgs eventArgs)
         {
           
@@ -119,25 +116,26 @@ namespace SecurityTestWPFApplication
              binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.None; 
              binding.Security.Message.ClientCredentialType = MessageCredentialType.Windows; 
              var factory = new WSTrustChannelFactory( 
-                 binding, 
-                 new EndpointAddress(AdFsBaseUri + "services/trust/13/windowsmixed")) 
+                 binding,
+                 new EndpointAddress(authority + "services/trust/13/windowsmixed")) 
              { 
                  TrustVersion = TrustVersion.WSTrust13 
              }; 
-             if (factory.Credentials == null) return null; 
+             //if (factory.Credentials == null) return null; 
              factory.Credentials.Windows.ClientCredential = CredentialCache.DefaultNetworkCredentials; 
              var rst = new RequestSecurityToken 
              { 
                  RequestType = WSTrust13Constants.RequestTypes.Issue, 
-                 AppliesTo = new EndpointAddress(AcsBaseUri), 
+                 AppliesTo = new EndpointAddress(authority), 
                  KeyType = WSTrust13Constants.KeyTypes.Bearer 
              }; 
              var channel = factory.CreateChannel(); 
              var genericToken = channel.Issue(rst) as GenericXmlSecurityToken; 
-             if (genericToken == null) return null; 
+      /*       if (genericToken == null) return null; 
              return genericToken.TokenXml.OuterXml; 
+       */
          } 
-        */
+        
         }
       
     

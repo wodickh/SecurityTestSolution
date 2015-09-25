@@ -11,8 +11,8 @@ using System.Threading;
 namespace SelfHosting.Pipeline
 {
     //[TestAuthenticationFilter]
-    //[TestAuthorizationFilter]
-    [Authorize]
+    [TestAuthorizationFilter]
+    //[Authorize]
 
     public class TestController : ApiController
     {
